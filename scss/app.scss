@@ -1,0 +1,44 @@
+$primary-color: #0066cc;
+$border-color: #ddd;
+$text-color: #222;
+$bg-color: #fff;
+
+
+body {
+    font-family: sans-serif;
+    max-width: 1380px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    color: $text-color;
+    background-color: $bg-color;
+}
+
+nav {
+    margin-bottom: 2rem;
+    border-bottom: 1px solid $border-color;
+    padding-bottom: 2rem;
+
+    a {
+        margin-right: 1.5rem;
+        text-decoration: none;
+        color: $primary-color;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+h1 {
+    border-bottom: 1px solid $border-color;
+    padding-bottom: .4rem;
+}
+
+a {
+    color: $primary-color;
+}
+
+img {
+    max-width: 100%;
+    border-radius: 6px;
+}

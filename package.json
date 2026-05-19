@@ -1,0 +1,25 @@
+{
+  "name": "interview",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "sass --watch scss/app.scss:public/css/app.css",
+    "build": "sass scss/app.scss:public/css/app.css --style=compressed"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agamyrat301/core-php-test-task.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/agamyrat301/core-php-test-task/issues"
+  },
+  "homepage": "https://github.com/agamyrat301/core-php-test-task#readme",
+  "devDependencies": {
+    "sass": "^1.99.0"
+  }
+}

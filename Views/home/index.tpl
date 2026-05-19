@@ -3,6 +3,14 @@
 {block name="title"}Home{/block}
 
 {block name="content"}
-<h1>Welcome</h1>
-<p>Browse the latest <a href="/articles">articles</a> or explore by <a href="/categories">category</a>.</p>
+{if $categories}
+    <ul>
+    {foreach $categories as $cat}
+        <div class="category-wrapper">
+        </div>
+    {/foreach}
+    </ul>
+{else}
+    <p>No categories found.</p>
+{/if}
 {/block}

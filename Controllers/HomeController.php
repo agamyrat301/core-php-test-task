@@ -1,8 +1,15 @@
 <?php
 
-class HomeController {
-    public function index(){
-        $category_by_id = Category::find(5);
-        var_dump($category_by_id);die();
+class HomeController extends Controller
+{
+    public function index()
+    {
+        $categories = Category::all()->map(function ($cat) {
+            $cat['articles'] = $cat['articles'] = Category::articles()
+                ->where('article_category.category_id', $cat['id'])
+                ->take(3);
+            return $cat;
+        });
+        $this->view('home/index', ['categories' => $categories]);
     }
 }

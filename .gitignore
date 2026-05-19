@@ -1,0 +1,18 @@
+# Dependencies
+/vendor/
+/node_modules/
+
+# Compiled assets
+/public/css/app.css
+/public/css/app.css.map
+
+# Smarty cache
+/storage/smarty/cache/
+/storage/smarty/compile/
+
+# Environment
+/config/database.php
+
+# OS
+.DS_Store
+Thumbs.db
