@@ -4,9 +4,6 @@ class Category extends Model
 {
     protected string $table = 'categories';
 
-    private string $title;
-    private string $description;
-
     public function all(): array
     {
         return $this->db
