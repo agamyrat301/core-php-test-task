@@ -19,6 +19,11 @@ class Collection implements Countable, IteratorAggregate
         return $this->items[0] ?? null;
     }
 
+    public function latest(): mixed
+    {
+        return $this->items[count($this->items) - 1] ?? null;
+    }
+
     public function count(): int
     {
         return count($this->items);
