@@ -2,6 +2,7 @@
 
 class HomeController {
     public function index(){
-        echo 'home page';
+        $category_by_id = Category::find(5);
+        var_dump($category_by_id);die();
     }
 }

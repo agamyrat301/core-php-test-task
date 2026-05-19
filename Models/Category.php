@@ -4,34 +4,23 @@ class Category extends Model
 {
     protected string $table = 'categories';
 
-    public function all(): array
+    public static function all(): Collection
     {
-        return $this->db
-            ->query("SELECT * FROM {$this->table} ORDER BY name")
-            ->fetchAll();
+        return static::query()->orderBy('name')->get();
     }
 
-    public function find(int $id): array|false
+    public static function find(int $id): array|false
     {
-        $stmt = $this->db->prepare(
-            "SELECT * FROM {$this->table} WHERE id = :id"
-        );
-        $stmt->execute([':id' => $id]);
-
-        return $stmt->fetch();
+        return static::query()->where('id',$id)->first();
     }
 
-    public function articles(int $categoryId): array
+    public static function articles(): QueryBuilder
     {
-        $stmt = $this->db->prepare("
-            SELECT articles.*
-            FROM articles
-            INNER JOIN article_category ON articles.id = article_category.article_id
-            WHERE article_category.category_id = :category_id
-            ORDER BY articles.created_at DESC
-        ");
-        $stmt->execute([':category_id' => $categoryId]);
-
-        return $stmt->fetchAll();
+        $db = Database::getInstance();
+        return (new QueryBuilder(
+            $db,
+            "articles INNER JOIN article_category ON articles.id = article_category.article_id"
+        ))->select('articles.*');
     }
+
 }

@@ -9,4 +9,10 @@ abstract class Model
     {
         $this->db = Database::getInstance();
     }
+
+    public static function query(): QueryBuilder
+    {
+        $instance = new static();
+        return new QueryBuilder($instance->db, $instance->table);
+    }
 }
