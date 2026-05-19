@@ -1,0 +1,44 @@
+#!/usr/bin/env php
+<?php
+
+define('BASE_PATH', __DIR__);
+
+require_once BASE_PATH . '/Core/Database.php';
+require_once BASE_PATH . '/Core/Migration.php';
+require_once BASE_PATH . '/Core/Migrator.php';
+require_once BASE_PATH . '/Core/Seeder.php';
+
+$command = $argv[1] ?? null;
+$options = array_slice($argv, 2);
+
+$db       = Database::getInstance();
+$migrator = new Migrator($db);
+
+$seed = function () use ($db): void {
+    require_once BASE_PATH . '/database/seeders/CategorySeeder.php';
+    require_once BASE_PATH . '/database/seeders/ArticleSeeder.php';
+    require_once BASE_PATH . '/database/seeders/DatabaseSeeder.php';
+    (new DatabaseSeeder($db))->run();
+    echo "Database seeded.\n";
+};
+
+match ($command) {
+    'migrate'          => $migrator->migrate(),
+    'migrate:rollback' => $migrator->rollback(),
+    'migrate:fresh'    => (function () use ($migrator, $options, $seed): void {
+        $migrator->fresh();
+        if (in_array('--seed', $options, true)) {
+            $seed();
+        }
+    })(),
+    'db:seed'          => $seed(),
+    default            => print(implode("\n", [
+        'Usage: php artisan.php <command>',
+        '',
+        '  migrate                    Run pending migrations',
+        '  migrate:rollback           Rollback the last batch',
+        '  migrate:fresh [--seed]     Drop all tables and re-run migrations',
+        '  db:seed                    Run the database seeders',
+        '',
+    ])),
+};
