@@ -14,7 +14,7 @@ class Collection implements Countable, IteratorAggregate
         return new static(array_values(array_filter($this->items, $fn)));
     }
 
-    public function first(): mixed
+    public function first(): array|null
     {
         return $this->items[0] ?? null;
     }

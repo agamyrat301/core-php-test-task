@@ -4,7 +4,7 @@
 
 {block name="content"}
 {if $categories}
-    <div>
+    <div class="flex-col gap-4 flex">
     {foreach $categories as $cat}
         <div class="category-wrapper">
             <div class="flex justify-between items-center">
@@ -12,9 +12,9 @@
                 {$cat.name|escape}
                 </h1>
 
-                <a href="#">View all</a>    
+                <a href="categories/{$cat.id}">View all</a>    
             </div>
-            <div class="flex justify-between items-center">
+            <div class="flex justify-between items-center gap-4">
 
                 {foreach $cat.articles as $article}
                 <div class="flex-1">
@@ -31,7 +31,7 @@
                         </p>
 
                         <p>
-                            {$article.description}
+                            {$article.body}
                         </p>
                         <a href="/articles/{$article.id}">Continue reading</a>
 

@@ -48,10 +48,44 @@ class QueryBuilder
         return new Collection($stmt->fetchAll());
     }
 
-    public function first(): array|false
+    public function first(): array|null
     {
         $this->limit = 1;
         return $this->get()->first();
+    }
+
+    public function paginate(int $perPage = 10): array
+    {
+        $page   = max(1, (int) ($_GET['page'] ?? 1));
+        $offset = ($page - 1) * $perPage;
+
+        // Count total matching rows without LIMIT
+        $countSql = "SELECT COUNT(*) FROM {$this->from}";
+        if ($this->conditions) {
+            $countSql .= ' WHERE ' . implode(' AND ', $this->conditions);
+        }
+        $countStmt = $this->db->prepare($countSql);
+        $countStmt->execute($this->bindings);
+        $total = (int) $countStmt->fetchColumn();
+
+        $lastPage = max(1, (int) ceil($total / $perPage));
+        $page     = min($page, $lastPage);
+
+        // Fetch the current page's rows
+        $sql  = $this->toSql() . " LIMIT {$perPage} OFFSET {$offset}";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($this->bindings);
+        $items = new Collection($stmt->fetchAll());
+
+        return [
+            'items'       => $items,
+            'total'       => $total,
+            'perPage'     => $perPage,
+            'currentPage' => $page,
+            'lastPage'    => $lastPage,
+            'from'        => $total === 0 ? 0 : $offset + 1,
+            'to'          => min($offset + $perPage, $total),
+        ];
     }
 
     private function toSql(): string

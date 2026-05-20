@@ -9,12 +9,15 @@ class Category extends Model
         return static::query()->orderBy('name')->get();
     }
 
-    public static function find(int $id): array|false
+    // Instance method — works after find(): Category::find($id)->articles()
+    public function articles(): QueryBuilder
     {
-        return static::query()->where('id',$id)->first();
+        return self::articlesQuery()
+            ->where('article_category.category_id', $this->id);
     }
 
-    public static function articles(): QueryBuilder
+    // Static query builder for articles — use when no specific category: Category::articlesQuery()->take(3)
+    public static function articlesQuery(): QueryBuilder
     {
         $db = Database::getInstance();
         return (new QueryBuilder(
@@ -22,5 +25,4 @@ class Category extends Model
             "articles INNER JOIN article_category ON articles.id = article_category.article_id"
         ))->select('articles.*');
     }
-
 }
