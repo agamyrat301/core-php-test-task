@@ -1,13 +1,25 @@
 <?php
 
+class ArticleController extends Controller
+{
+    public function index()
+    {
+        $articles = Article::all();
+        $this->view('articles/index', ['articles' => $articles]);
+    }
 
-class ArticleController extends Controller {
     public function show(int $id)
     {
         $article = Article::find($id);
-        $related_articles = $article->categories($id)->paginate();
-        var_dump($related_articles); die();
-        $this->view('articles/show',['article'=>$article]);
+        $article->incrementViews();
 
+        $categories = Article::categories($id)->get();
+        $related    = Article::related($id);
+
+        $this->view('articles/show', [
+            'article'    => $article,
+            'categories' => $categories,
+            'related'    => $related,
+        ]);
     }
 }
