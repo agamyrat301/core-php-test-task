@@ -27,7 +27,7 @@ abstract class Model
         $stmt->execute([$id]);
         $row = $stmt->fetch();
 
-        if (!$row) return null;
+        if (!$row) throw new Exception("Model Not Found");
 
         $instance->attributes = $row;
         return $instance;

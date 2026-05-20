@@ -54,7 +54,7 @@ class QueryBuilder
         return $this->get()->first();
     }
 
-    public function paginate(int $perPage = 10): array
+    public function paginate(int $perPage = null): array
     {
         $page   = max(1, (int) ($_GET['page'] ?? 1));
         $offset = ($page - 1) * $perPage;
@@ -68,6 +68,7 @@ class QueryBuilder
         $countStmt->execute($this->bindings);
         $total = (int) $countStmt->fetchColumn();
 
+        $perPage = $perPage ?? 10;
         $lastPage = max(1, (int) ceil($total / $perPage));
         $page     = min($page, $lastPage);
 

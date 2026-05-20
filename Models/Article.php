@@ -4,40 +4,20 @@ class Article extends Model
 {
     protected string $table = 'articles';
 
-    private string $image;
-    private string $title;
-    private string $description;
-    private string $body;
-    private int    $views;
-
-    public function all(): array
+    public function all(): Collection
     {
-        return $this->db
-            ->query("SELECT * FROM {$this->table} ORDER BY created_at DESC")
-            ->fetchAll();
+        return static::query()->orderBy('views')->get();
     }
 
-    public function find(int $id): array|false
+    public static function categories(int $articleId): QueryBuilder
     {
-        $stmt = $this->db->prepare(
-            "SELECT * FROM {$this->table} WHERE id = :id"
-        );
-        $stmt->execute([':id' => $id]);
-
-        return $stmt->fetch();
-    }
-
-    public function categories(int $articleId): array
-    {
-        $stmt = $this->db->prepare("
-            SELECT categories.*
-            FROM categories
-            INNER JOIN article_category ON categories.id = article_category.category_id
-            WHERE article_category.article_id = :article_id
-        ");
-        $stmt->execute([':article_id' => $articleId]);
-
-        return $stmt->fetchAll();
+        $db = Database::getInstance();
+        return (new QueryBuilder(
+            $db,
+            "categories INNER JOIN article_category ON categories.id = article_category.category_id"
+        ))
+            ->select('categories.*')
+            ->where('article_category.article_id', $articleId);
     }
 
     public function incrementViews(int $id): void

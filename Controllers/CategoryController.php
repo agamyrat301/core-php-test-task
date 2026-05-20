@@ -10,11 +10,11 @@ class CategoryController extends Controller{
         $this->view('categories/index', ['categories' => $categories]);
     }
 
-public function show(int $id)
-    {
-        $category = Category::find($id)->articles()->paginate();
-        var_dump($category); die();
-        //$this->view('categories/show', ['categories' => $categories]);
+    public function show(int $id)
+        {
+            $category = Category::find($id)->articles()->paginate();
+            var_dump($category); die();
+            //$this->view('categories/show', ['categories' => $categories]);
 
+        }
     }
-}
