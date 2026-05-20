@@ -17,26 +17,7 @@
             <div class="flex justify-between items-center gap-4">
 
                 {foreach $cat.articles as $article}
-                <div class="flex-1">
-                    <div class="rounded">
-                        <img src="{$article.image|escape}" alt="{$article.title|escape}"/>
-                    </div>
-                    
-                    <div class="p-2 flex-col gap-2">
-                        <p>
-                            {$article.title|escape}
-                        </p>
-                        <p>
-                            {$article.created_at}
-                        </p>
-
-                        <p>
-                            {$article.body}
-                        </p>
-                        <a href="/articles/{$article.id}">Continue reading</a>
-
-                    </div>
-                </div>
+                    {include file="components/article-card.tpl" article=$article}
                 {/foreach}
             </div>
         </div>
