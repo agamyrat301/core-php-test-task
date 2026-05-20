@@ -4,9 +4,9 @@ class Category extends Model
 {
     protected string $table = 'categories';
 
-    public static function all(): Collection
+    public static function all(): QueryBuilder
     {
-        return static::query()->orderBy('name')->get();
+        return static::query()->orderBy('name');
     }
 
     // Instance method — works after find(): Category::find($id)->articles()

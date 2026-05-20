@@ -24,7 +24,7 @@ $router = new Router();
 
 $router->get('/','HomeController@index');
 $router->get('/categories','CategoryController@index');
-$router->get('/categories/{category}','CategoryController@show');
+$router->get('/categories/{id}','CategoryController@show');
 // Article routes
 $router->get('/articles',          'ArticleController@index');
 $router->get('/articles/{id}',     'ArticleController@show');
