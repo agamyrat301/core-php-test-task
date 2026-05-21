@@ -10,8 +10,8 @@
 /storage/smarty/cache/
 /storage/smarty/compile/
 
-# Environment
-/config/database.php
+# Environment overrides
+.env
 
 # OS
 .DS_Store

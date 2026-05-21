@@ -1,0 +1,7 @@
+.git
+node_modules
+vendor
+storage/smarty/cache
+storage/smarty/compile
+.env
+.DS_Store
