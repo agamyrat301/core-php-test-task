@@ -6,25 +6,33 @@ $bg-color: #fff;
 
 body {
     font-family: sans-serif;
+    color: $text-color;
+    background-color: $bg-color;
+    margin: 0;
+}
+
+.container {
     max-width: 1380px;
     margin: 2rem auto;
     padding: 0 1rem;
-    color: $text-color;
-    background-color: $bg-color;
 }
 
 nav {
-    margin-bottom: 2rem;
-    border-bottom: 1px solid $border-color;
-    padding-bottom: 2rem;
+    background: #2b5465;
+    padding: 1rem 0;
+
+    .container {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
 
     a {
         margin-right: 1.5rem;
         text-decoration: none;
-        color: $primary-color;
+        color: #cfe4ec;
 
         &:hover {
-            text-decoration: underline;
+            color: #fff;
         }
     }
 }
@@ -233,6 +241,17 @@ img {
         color: #999;
         margin-top: auto;
     }
+}
+
+// Footer
+footer {
+    background: #2b5465;
+    color: #cfe4ec;
+    text-align: center;
+    padding: 2rem 1rem;
+    margin-top: 3rem;
+
+    p { margin: 0; font-size: 0.875rem; }
 }
 
 // Pagination

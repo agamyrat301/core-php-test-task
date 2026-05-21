@@ -8,11 +8,19 @@
 </head>
 <body>
     <nav>
-        <a href="/">Home</a>
-        <a href="/articles">Articles</a>
-        <a href="/categories">Categories</a>
+        <div class="container">
+            <a href="/">Home</a>
+            <a href="/articles">Articles</a>
+            <a href="/categories">Categories</a>
+        </div>
     </nav>
 
-    {block name="content"}{/block}
+    <div class="container">
+        {block name="content"}{/block}
+    </div>
+
+    <footer>
+        <p>&copy; {$smarty.now|date_format:"%Y"} Interview App. All rights reserved.</p>
+    </footer>
 </body>
 </html>
