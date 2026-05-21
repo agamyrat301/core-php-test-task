@@ -3,14 +3,22 @@
 class HomeController extends Controller
 {
     public function index()
-    {
-        $categories = Category::all()->get()->map(function ($cat) {
-            $cat['articles'] = Category::articlesQuery()
-                ->where('article_category.category_id', $cat['id'])
-                ->orderBy('articles.created_at', 'DESC')
-                ->take(3);
-            return $cat;
-        })->filter(fn($cat) => count($cat['articles']) > 0);
+    {   
+        $categories = new QueryBuilder(
+            Database::getInstance(),
+            'categories INNER JOIN article_category ON categories.id = article_category.category_id'
+        );
+
+        $categories = $categories->select('DISTINCT categories.*')
+            ->orderBy('categories.name')
+            ->get()
+            ->map(function($cat){
+                $cat['articles'] = Category::articlesQuery()
+                    ->where('article_category.category_id', $cat['id'])
+                    ->take(3);
+                return $cat;
+            });
+
         $this->view('home/index', ['categories' => $categories]);
     }
 }

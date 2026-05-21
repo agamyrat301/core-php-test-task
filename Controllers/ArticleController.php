@@ -2,12 +2,6 @@
 
 class ArticleController extends Controller
 {
-    public function index()
-    {
-        $articles = Article::all();
-        $this->view('articles/index', ['articles' => $articles]);
-    }
-
     public function show(int $id)
     {
         $article = Article::find($id);

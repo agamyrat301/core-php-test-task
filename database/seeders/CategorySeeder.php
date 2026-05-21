@@ -21,6 +21,7 @@ class CategorySeeder extends Seeder
             ['name' => 'Sports',     'description' => 'Football, basketball, and more.'],
             ['name' => 'Politics',   'description' => 'Local and world political news.'],
             ['name' => 'Culture',    'description' => 'Arts, cinema, music, and literature.'],
+            ['name' => 'test',    'description' => 'test1'],
         ];
     }
 }

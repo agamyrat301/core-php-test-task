@@ -5,17 +5,21 @@ class ArticleSeeder extends Seeder
     public function run(): void
     {
         $insert = $this->db->prepare("
-            INSERT INTO articles (image, title, description, body, views)
-            VALUES (:image, :title, :description, :body, :views)
+            INSERT INTO articles (image, title, description, body, views, created_at)
+            VALUES (:image, :title, :description, :body, :views, :created_at)
         ");
 
         $pivot = $this->db->prepare(
             "INSERT INTO article_category (article_id, category_id) VALUES (:article_id, :category_id)"
         );
 
-        foreach ($this->data() as $row) {
+        foreach ($this->data() as $index => $row) {
             $categories = $row['categories'];
             unset($row['categories']);
+            
+            // Add created_at dates spread across the past 60 days
+            $daysAgo = intdiv($index, 2); // Every 2 articles share same day, then increment
+            $row['created_at'] = date('Y-m-d H:i:s', strtotime("-{$daysAgo} days"));
 
             $insert->execute($row);
             $articleId = (int) $this->db->lastInsertId();
@@ -104,6 +108,12 @@ class ArticleSeeder extends Seeder
             ['image' => 'https://picsum.photos/seed/c11/800/400', 'title' => 'The Return of the Cinema: Post-Pandemic Lessons', 'description' => 'Hollywood\'s bet that theatrical exclusivity could coexist with streaming has produced mixed results, with blockbusters performing strongly while mid-budget films struggle to find theatrical audiences willing to leave home. The cinema industry\'s survival strategy is emerging from the data of four post-pandemic years.', 'body' => 'The theatrical window has stabilized at approximately 45 days, down from the traditional 90, with evidence that shorter windows actually increase rather than decrease theatrical revenue for most titles. Premium large-format auditoriums generate disproportionate revenue and attract the social event-driven attendance that streaming cannot replicate. The studios and theaters that have survived are those that recognized cinema\'s competitive advantage is the shared experience rather than content exclusivity, and have invested accordingly in presentation quality and programming curation.', 'views' => 623, 'categories' => [5]],
             ['image' => 'https://picsum.photos/seed/c12/800/400', 'title' => 'Dance Music\'s Cultural Geography', 'description' => 'Electronic dance music\'s global spread has produced regional scenes with distinctive aesthetics rooted in specific urban and cultural contexts. From Chicago house and Detroit techno\'s origins in Black LGBTQ communities to Afrobeats\' Atlantic crossing and Amapiano\'s South African emergence, the geography of dance music is inseparable from the social history of its creators.', 'body' => 'Chicago house emerged from the post-disco underground club scene in a city experiencing deindustrialization and racial segregation, with Frankie Knuckles and Larry Heard creating music from available technology for communities excluded from mainstream entertainment. Amapiano\'s international breakthrough, driven by social media dance challenges, represents the first major South African music genre to achieve global commercial scale independently of Western label infrastructure. The economic returns from dance music\'s globalization have historically been captured far more by distributors and promoters than by originating communities.', 'views' => 412, 'categories' => [5]],
             ['image' => 'https://picsum.photos/seed/c13/800/400', 'title' => 'The Graphic Novel Grows Up', 'description' => 'From Art Spiegelman\'s Maus to Marjane Satrapi\'s Persepolis to Alison Bechdel\'s Fun Home, literary graphic novels have achieved critical prestige, academic study, and mainstream publishing investment that the medium\'s founders could not have anticipated. The form\'s unique combination of word and image continues to attract writers and artists seeking to do things neither can do alone.', 'body' => 'The graphic novel\'s commercial and critical maturation has produced a diversity of voices that mainstream prose publishing has struggled to match. Autobiographical work dominates literary graphic novels because the form\'s visual specificity makes personal experience particularly immediate. Chris Ware\'s structural experimentation pushes the form\'s page-as-architectural-space possibilities in ways that no other medium can replicate. Library and educational adoption has created stable non-bookstore sales channels that sustain authors through slower commercial periods.', 'views' => 378, 'categories' => [5]],
-        ];
+        
+
+            ['image' => 'https://picsum.photos/seed/c1/800/400', 'title' => 'test', 'description' => 'test', 'body' => 'The streaming model\'s original advantage was subscriber growth funded by debt, enabling content investment that traditional broadcast economics couldn\'t match. As subscriber growth saturated developed markets, profitability pressure has produced password-sharing crackdowns, ad-supported tiers, and content budget reductions that mirror the network television model streaming supposedly disrupted. The consolidation of Paramount+, Max, and Peacock reflects an industry recognizing that fragmentation has reached consumer tolerance limits.', 'views' => 892, 'categories' => [6]],
+            ['image' => 'https://picsum.photos/seed/c1/800/400', 'title' => 'test2', 'description' => 'test22222', 'body' => 'The streaming model\'s original advantage was subscriber growth funded by debt, enabling content investment that traditional broadcast economics couldn\'t match. As subscriber growth saturated developed markets, profitability pressure has produced password-sharing crackdowns, ad-supported tiers, and content budget reductions that mirror the network television model streaming supposedly disrupted. The consolidation of Paramount+, Max, and Peacock reflects an industry recognizing that fragmentation has reached consumer tolerance limits.', 'views' => 1, 'categories' => [6]],
+            
+
+            ];
     }
 }
