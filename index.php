@@ -26,7 +26,7 @@ $router->get('/','HomeController@index');
 $router->get('/categories','CategoryController@index');
 $router->get('/categories/{id}','CategoryController@show');
 // Article routes
-$router->get('/articles',          'ArticleController@index');
+//$router->get('/articles',          'ArticleController@index');
 $router->get('/articles/{id}',     'ArticleController@show');
 
 $router->dispatch($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);
