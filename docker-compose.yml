@@ -12,7 +12,6 @@ services:
       db:
         condition: service_healthy
     volumes:
-      - ./storage/smarty:/var/www/html/storage/smarty
       - ./public/uploads:/var/www/html/public/uploads
 
   db:
