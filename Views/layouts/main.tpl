@@ -10,8 +10,7 @@
     <nav>
         <div class="container">
             <a href="/">Home</a>
-            <a href="/articles">Articles</a>
-            <a href="/categories">Categories</a>
+           
         </div>
     </nav>
 

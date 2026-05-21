@@ -12,6 +12,7 @@ services:
       db:
         condition: service_healthy
     volumes:
+      - ./Views:/var/www/html/Views
       - ./public/uploads:/var/www/html/public/uploads
 
   db:
